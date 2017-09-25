@@ -1,0 +1,30 @@
+{
+  "name": "cardsinventory",
+  "version": "1.0.0",
+  "description": "inventory or homemade cards and supplies",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KseniaAK/CardsInventory.git"
+  },
+  "author": "Ksenia K.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KseniaAK/CardsInventory/issues"
+  },
+  "homepage": "https://github.com/KseniaAK/CardsInventory#readme",
+  "devDependencies": {
+    "nodemon": "^1.12.1",
+    "supertest": "^3.0.0"
+  },
+  "dependencies": {
+    "chai": "^4.1.2",
+    "express": "^4.15.4",
+    "mocha": "^3.5.3",
+    "pg": "^7.3.0"
+  }
+}
