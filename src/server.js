@@ -3,6 +3,7 @@ const express = require('express')
 const pg = require('pg')
 const cardsCtrl = require('./controllers/cardsCtrl')
 const bodyParser = require('body-parser')
+const path = require('path')
 
 const app = express()
 const hostname = 'localhost'
@@ -17,7 +18,7 @@ app.use((err, req, res, next) => {
 })
 
 app.get('/', (req, res) => {
-  res.send({ hello: 'world' })
+  res.sendFile(path.resolve(__dirname, '../static/index.html'))
 })
 
 app.get('/cards', cardsCtrl.getAllCards)
