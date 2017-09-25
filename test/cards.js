@@ -16,11 +16,13 @@ describe('/cards route', () => {
         })
     })
 
-    it('should return list of card names', (done) => {
+    it('should return a list of card names', (done) => {
       request(app)
         .get('/cards')
         .end((err, res) => {
           expect(res.body).to.be.an('array')
+          expect(res.body[0]).to.be.an('object')
+          expect(res.body[0]).to.have.property('name')
           done()
         })
     })
