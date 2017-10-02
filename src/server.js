@@ -26,6 +26,8 @@ app.get('/cards', cardsCtrl.getAllCards)
 
 app.post('/cards', cardsCtrl.addCard)
 
+app.post('/remove', cardsCtrl.deleteCard)
+
 app.listen(port, (err) => {
   if (err) console.log(`Error: ${err}`)
   else console.log(`listening on port ${port}`)
