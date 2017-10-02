@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <head>
   <title>Cards Inventory - Home Page</title>
-  <!-- <link rel='stylesheet' href='styles.css'> -->
+  <!-- <link rel="stylesheet" href="styles.css"> -->
 </head>
 
 <body>
   <h3>What would you like to find out more about?</h3>
   <ul>
-    <li><a href='/cards'>Cards</a></li>
-    <li><a href='/stamps'>Stamps</a></li>
-    <li><a href='/copics'>Copics</a></li>
-    <li><a href='/stickles'>Stickles</a></li>
+    <li><a href="/cards">Cards</a></li>
+    <li><a href="/stamps">Stamps</a></li>
+    <li><a href="/copics">Copics</a></li>
+    <li><a href="/stickles">Stickles</a></li>
   </ul>
+
+  <h3>Or, you can add a new card!</h3>
+  <form action="/cards" method="POST">
+    <input type="text" name="cardName" placeholder="Name your card!" size="40" maxlength="80"><br/>
+    <input type="text" name="mainStamp" placeholder="What's the main image?" size="40" maxlength="80"><br/>
+    <input type="text" name="otherStamps" placeholder="Any other stamps?" size="40"><br/>
+    <input type="text" name="stickles" placeholder="Any stickles?" size="40"><br/>
+    <input type="text" name="copics" placeholder="Which copics were involved?" size="40"><br/>
+    <input type="submit" value="Add my card!">
+  </form>
 </body>

@@ -18,7 +18,19 @@ function getAllCards(req, res, next) {
 }
 
 function addCard(req, res, next) {
-
+  console.log('Request body', req.body)
+  client.query(`INSERT INTO cards VALUES (
+      '${req.body.cardName}', 
+      '${req.body.mainStamp}', 
+      '{${req.body.otherStamps.split(',')}}', 
+      '{${req.body.stickles.split(',')}}',
+      '{${req.body.copics.split(',')}}'
+    );`,
+    (err) => {
+      if (err) console.log('\n\n\nError in client.query\n\n\n', err.stack)
+      else res.status(201).send()
+    }
+  )
 }
 
 function deleteCard(req, res, next) {
