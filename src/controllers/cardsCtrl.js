@@ -34,7 +34,12 @@ function addCard(req, res, next) {
 }
 
 function deleteCard(req, res, next) {
-
+  client.query(`DELETE FROM cards WHERE name = '${req.body.cardName}';`,
+    (err) => {
+      if (err) console.log('\n\n\nError in client.query\n\n\n', err.stack)
+      else res.status(201).send()
+    }
+  )
 }
 
 module.exports = { getAllCards, addCard, deleteCard }
