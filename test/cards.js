@@ -3,7 +3,7 @@ const expect = require('chai').expect
 const express = require('express')
 const { Client } = require('pg')
 
-const app = require('../src/server.js')
+const app = require('../server/server.js')
 
 describe('/cards route', () => {
   describe('Retrieving cards from database', () => {
@@ -31,32 +31,18 @@ describe('/cards route', () => {
   describe('Adding a card to Postgres database', () => {
     let db
     const newCard = {
-      name: 'myCard',
+      name: 'myTestingCard',
       mainStamp: 'HouseMouse',
-      otherStamps: [],
-      stickles: [],
-      copics: []
+      otherStamps: 'tree, mouse, cat',
+      stickles: 'frost, tangerine',
+      copics: 'gray, green, red'
     }
-
-    // set up mock database
-    before((done) => {
-      db = new Client({
-        user: 'xushenka',
-        host: 'localhost',
-        database: 'mydb',
-        password: null,
-        port: 5432,
-      })
-      
-      db.connect()
-      done()
-    })
 
     it('should return status 201 = created', (done) => {
       request(app)
         .post('/cards')
         .send(newCard)
-        .end((res) => {
+        .end((err, res) => {
           expect(res.status).to.equal(201)
           done()
         })
@@ -67,26 +53,24 @@ describe('/cards route', () => {
         SELECT EXISTS (
           SELECT 1
           FROM cards
-          WHERE name = 'myCard'
+          WHERE name = 'myTestingCard'
         );
       `
 
-      db.query(doesNewRowExist, (err, result) => {
-        expect(err).to.not.exist
-        expect(result.rows[0].exists).to.eql(true)
-        done()
-      })
+      request(app)
+        .post('/cards')
+        .send(newCard)
+        .end((err, res) => {
+          db.query(doesNewRowExist, (err, result) => {
+            expect(err).to.not.exist
+            expect(result.rows[0].exists).to.eql(true)
+          })
+          done()
+        })
     })
 
     xit('should not modify any other entry in the database', (done) => {
 
-    })
-
-    after(() => {
-      db.end((err) => {
-        console.log('client has disconnected')
-        if (err) console.log('error during disconnection', err.stack)
-      })
     })
   })
 })
