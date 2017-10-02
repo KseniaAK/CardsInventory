@@ -11,6 +11,7 @@ const port = 3000
 
 // parse application/json
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // error handler middleware - should be last app.use defined middleware
 app.use((err, req, res, next) => {
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/cards', cardsCtrl.getAllCards)
+
+app.post('/cards', cardsCtrl.addCard)
 
 app.listen(port, (err) => {
   if (err) console.log(`Error: ${err}`)
