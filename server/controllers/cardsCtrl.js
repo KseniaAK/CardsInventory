@@ -18,7 +18,6 @@ function getAllCards(req, res, next) {
 }
 
 function addCard(req, res, next) {
-  console.log('Request body', req.body)
   client.query(`INSERT INTO cards VALUES (
       '${req.body.cardName}', 
       '${req.body.mainStamp}', 
@@ -34,7 +33,12 @@ function addCard(req, res, next) {
 }
 
 function deleteCard(req, res, next) {
-
+  client.query(`DELETE FROM cards WHERE name = '${req.body.cardName}';`,
+    (err) => {
+      if (err) console.log('\n\n\nError in client.query\n\n\n', err.stack)
+      else res.status(200).send()
+    }
+  )
 }
 
 module.exports = { getAllCards, addCard, deleteCard }
