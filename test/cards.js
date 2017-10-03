@@ -96,10 +96,6 @@ describe('/cards route', () => {
           done()
         })
     })
-
-    xit('should not modify any other entry in the database', (done) => {
-
-    })
   })
 })
 
