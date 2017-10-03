@@ -1,12 +1,34 @@
 const request = require('supertest')
 const expect = require('chai').expect
 const express = require('express')
-const { Client } = require('pg')
+// const { Client } = require('pg')
+const db = require('../server/models/database')
 
 const app = require('../server/server.js')
 
 describe('/cards route', () => {
   describe('Retrieving cards from database', () => {
+    
+    // Empty database and add a new card
+    before(function(done) {
+      db.query('DELETE FROM cards', (err) => {
+        if (err) console.log('Error deleting all rows', err)
+      })
+      db.query(`INSERT INTO cards VALUES (
+          'myTestingCard1', 
+          'HouseMouse', 
+          '{tree, mouse, cat}', 
+          '{frost, tangerine}',
+          '{gray, green, red}'
+        );`,
+        (err) => {
+          if (err) console.log('\n\n\nError in db.query\n\n\n', err.stack)
+        }
+      )
+      done()
+    })
+    
+    // Actually check GET request to /cards
     it('should return status 200', (done) => {
       request(app)
         .get('/cards')
@@ -29,14 +51,28 @@ describe('/cards route', () => {
   })
 
   describe('Adding a card to Postgres database', () => {
-    let db
     const newCard = {
-      name: 'myTestingCard',
+      name: 'myTestingCard2',
       mainStamp: 'HouseMouse',
       otherStamps: 'tree, mouse, cat',
       stickles: 'frost, tangerine',
       copics: 'gray, green, red'
     }
+    const doesNewRowExist = `
+      SELECT EXISTS (
+        SELECT 1
+        FROM cards
+        WHERE name = 'myTestingCard2'
+      );
+    `
+    
+    // Empty database table before each test
+    beforeEach(function(done) {
+      db.query('DELETE FROM cards', (err) => {
+        if (err) console.log('Error deleting all rows', err)
+      })
+      done()
+    })
 
     it('should return status 201 = created', (done) => {
       request(app)
@@ -49,14 +85,6 @@ describe('/cards route', () => {
     })
 
     it('should add the specified card as new entry to database cards table', (done) => {
-      const doesNewRowExist = `
-        SELECT EXISTS (
-          SELECT 1
-          FROM cards
-          WHERE name = 'myTestingCard'
-        );
-      `
-
       request(app)
         .post('/cards')
         .send(newCard)
