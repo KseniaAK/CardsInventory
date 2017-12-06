@@ -4,8 +4,8 @@
   "description": "inventory or homemade cards and supplies",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/server.js",
-    "test": "mocha"
+    "start": "DB_NAME=dev nodemon server/server.js",
+    "test": "DB_NAME=test mocha"
   },
   "repository": {
     "type": "git",

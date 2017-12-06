@@ -1,7 +1,7 @@
 const config = {}
 
 config.postgresDbName = {
-  development: 'mydb',
+  dev: 'cards',
   test: 'test'
 }
 
