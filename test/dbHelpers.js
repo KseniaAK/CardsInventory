@@ -11,9 +11,9 @@ function fillDatabase(db) {
 
   // Add a new recipient
   db.query(`INSERT INTO recipients (
-    id, first_name, birth_month
+    id, first_name, last_name, birth_day, birth_month
   ) VALUES (
-    1, 'Natalie', 1
+    1, 'Natalie', 'Tu', 6, 1
   );`,
   (err) => {
     if (err) console.log('\n\n\nError in db.query\n\n\n', err.stack)
@@ -23,7 +23,7 @@ function fillDatabase(db) {
   db.query(`INSERT INTO occasions (
     id, name, month
   ) VALUES (
-    1, 'Birthday', 1
+    1, 'New Year', 1
   );`,
   (err) => {
     if (err) console.log('\n\n\nError in db.query\n\n\n', err.stack)
@@ -39,11 +39,21 @@ function fillDatabase(db) {
     if (err) console.log('\n\n\nError in db.query\n\n\n', err.stack)
   })
 
+  // Add a new stickles
+  db.query(`INSERT INTO stickles (
+    id, name
+  ) VALUES (
+    1, 'Stardust'
+  );`,
+  (err) => {
+    if (err) console.log('\n\n\nError in db.query\n\n\n', err.stack)
+  })
+
   // Add a new stamp
   db.query(`INSERT INTO stamps (
-    id, name, brand
+    id, name, brand, wooden
   ) VALUES (
-    1, 'Birthday stamp', 1
+    1, 'Birthday stamp', 1, true
   );`,
   (err) => {
     if (err) console.log('\n\n\nError in db.query\n\n\n', err.stack)
@@ -54,6 +64,8 @@ function fillDatabase(db) {
     id, recipient, occasion, main_stamp, name
   ) VALUES (
     1, 1, 1, 1, 'My Hello World Card'
+  ), (
+    2, 1, 1, 1, 'My Hello World Card 2'
   );`,
   (err) => {
     if (err) console.log('\n\n\nError in db.query\n\n\n', err.stack)
@@ -66,6 +78,10 @@ function emptyDatabase(db) {
   })
 
   db.query('DELETE FROM stamps', (err) => {
+    if (err) console.log('\n\n\nError deleting all rows\n\n\n', err)
+  })
+
+  db.query('DELETE FROM stickles', (err) => {
     if (err) console.log('\n\n\nError deleting all rows\n\n\n', err)
   })
 
