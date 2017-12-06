@@ -12,7 +12,7 @@ create table months (
 create table occasions (
   id smallint primary key,
   name varchar not null,
-  month int not null references months(id)
+  month int references months(id)
 );
 
 create table recipients (
